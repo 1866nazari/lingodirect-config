@@ -1,0 +1,1 @@
+# lingodirect-config
