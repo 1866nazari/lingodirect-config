@@ -78,6 +78,7 @@ def get_public_url():
 
 
 def commit_and_push(new_url):
+<<<<<<< Updated upstream
     """Updates config.json, keeps tunnel URL in a single amendable commit, and pushes safely."""
     print("Starting Git update process...")
 
@@ -85,19 +86,25 @@ def commit_and_push(new_url):
     TUNNEL_COMMIT_MESSAGE = f"{TUNNEL_COMMIT_PREFIX} update active tunnel endpoint"
 
     # 1. Make sure we are on main
+=======
+    """Updates config.json, commits, and pushes safely to GitHub on clean-history branch."""
+    print("Starting Git update process...")
+
+    # 1. Make sure we are on clean-history
+>>>>>>> Stashed changes
     code, out, err = run_command("git branch --show-current")
     current_branch = (out or "").strip()
-    if current_branch != "main":
-        print("-> Git: Switching to main branch...")
-        code, out, err = run_command("git checkout main")
+    if current_branch != "clean-history":
+        print("-> Git: Switching to clean-history branch...")
+        code, out, err = run_command("git checkout clean-history")
         if code != 0:
             print("Git checkout failed:")
             print(out or err)
             return False
 
-    # 2. Sync safely with remote without rewriting history
+    # 2. Sync safely with remote
     print("-> Git: Pulling latest changes with fast-forward only...")
-    code, out, err = run_command("git pull --ff-only origin main")
+    code, out, err = run_command("git pull --ff-only origin clean-history")
     if code != 0:
         print("Git pull failed:")
         print(out or err)
@@ -110,17 +117,28 @@ def commit_and_push(new_url):
     run_command("git add config.json")
     print(f"-> Git: Staging file with URL: {new_url}")
 
+<<<<<<< Updated upstream
     # If nothing changed, skip
     code, out, err = run_command("git diff --cached --name-only")
     staged = (out or "").strip()
     if not staged:
         print("-> Git: No staged changes. Skipping commit/push.")
+=======
+    # 4. Commit changes
+    commit_message = f'Update tunnel URL: {new_url}'
+    code, out, err = run_command(f'git commit -m "{commit_message}"')
+    commit_output = "\n".join(part for part in (out, err) if part)
+
+    if "nothing to commit" in commit_output.lower():
+        print("-> Git: No change detected. Skipping push.")
+>>>>>>> Stashed changes
         return True
 
     # 4. Decide whether to amend last tunnel commit or create a new one
     code, out, err = run_command('git log -1 --pretty=%B')
     last_msg = (out or "").strip()
 
+<<<<<<< Updated upstream
     if last_msg.startswith(TUNNEL_COMMIT_PREFIX):
         # Amend existing tunnel commit (single-commit rolling update)
         print("-> Git: Amending previous tunnel commit (no new commit will be created)...")
@@ -170,6 +188,18 @@ def commit_and_push(new_url):
 
         print("GitHub updated successfully (created tunnel commit).")
         return True
+=======
+    # 5. Push to clean-history
+    print(f"-> Git: Pushing to origin/clean-history...")
+    code, out, err = run_command("git push origin clean-history")
+    if code != 0:
+        print("Git push failed:")
+        print(out or err)
+        return False
+
+    print("GitHub updated successfully on clean-history.")
+    return True
+>>>>>>> Stashed changes
 
 
 def extract_url(text):
