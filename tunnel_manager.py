@@ -78,37 +78,29 @@ def get_public_url():
 
 
 def commit_and_push(new_url):
-<<<<<<< Updated upstream
-    """Updates config.json, keeps tunnel URL in a single amendable commit, and pushes safely."""
+    """Updates config.json, keeps tunnel URL in a single amendable commit, and pushes safely on current branch."""
     print("Starting Git update process...")
 
-    TUNNEL_COMMIT_PREFIX = "TunnelURL:"  # ثابت نگه دارید تا قابل تشخیص باشد
+    TUNNEL_COMMIT_PREFIX = "TunnelURL:"
     TUNNEL_COMMIT_MESSAGE = f"{TUNNEL_COMMIT_PREFIX} update active tunnel endpoint"
 
-    # 1. Make sure we are on main
-=======
-    """Updates config.json, commits, and pushes safely to GitHub on clean-history branch."""
-    print("Starting Git update process...")
-
-    # 1. Make sure we are on clean-history
->>>>>>> Stashed changes
+    # 1. Get current branch (instead of forcing main)
     code, out, err = run_command("git branch --show-current")
     current_branch = (out or "").strip()
-    if current_branch != "clean-history":
-        print("-> Git: Switching to clean-history branch...")
-        code, out, err = run_command("git checkout clean-history")
-        if code != 0:
-            print("Git checkout failed:")
-            print(out or err)
-            return False
+    print(f"-> Git: Working on branch: {current_branch}")
 
-    # 2. Sync safely with remote
-    print("-> Git: Pulling latest changes with fast-forward only...")
-    code, out, err = run_command("git pull --ff-only origin clean-history")
-    if code != 0:
-        print("Git pull failed:")
-        print(out or err)
-        return False
+    # 2. Pull latest changes safely
+    print(f"-> Git: Pulling latest changes on {current_branch}...")
+    # ابتدا بررسی می‌کنیم که آیا این شاخه در ریموت وجود دارد یا خیر
+    code, out, err = run_command(f"git ls-remote --heads origin {current_branch}")
+    if (out or "").strip():
+        # اگر شاخه در ریموت وجود دارد، pull انجام بده
+        code, out, err = run_command(f"git pull --ff-only origin {current_branch}")
+        if code != 0:
+            print("Git pull failed:", out or err)
+            return False
+    else:
+        print("-> Git: Remote branch does not exist yet. Skipping pull.")
 
     # 3. Save new URL locally
     save_url(new_url)
@@ -117,89 +109,40 @@ def commit_and_push(new_url):
     run_command("git add config.json")
     print(f"-> Git: Staging file with URL: {new_url}")
 
-<<<<<<< Updated upstream
     # If nothing changed, skip
     code, out, err = run_command("git diff --cached --name-only")
     staged = (out or "").strip()
     if not staged:
         print("-> Git: No staged changes. Skipping commit/push.")
-=======
-    # 4. Commit changes
-    commit_message = f'Update tunnel URL: {new_url}'
-    code, out, err = run_command(f'git commit -m "{commit_message}"')
-    commit_output = "\n".join(part for part in (out, err) if part)
-
-    if "nothing to commit" in commit_output.lower():
-        print("-> Git: No change detected. Skipping push.")
->>>>>>> Stashed changes
         return True
 
-    # 4. Decide whether to amend last tunnel commit or create a new one
+    # 4. Amend or Commit
     code, out, err = run_command('git log -1 --pretty=%B')
     last_msg = (out or "").strip()
 
-<<<<<<< Updated upstream
     if last_msg.startswith(TUNNEL_COMMIT_PREFIX):
-        # Amend existing tunnel commit (single-commit rolling update)
-        print("-> Git: Amending previous tunnel commit (no new commit will be created)...")
-        # پیام ثابت نگه داشته می‌شود؛ محتوا (config.json) عوض می‌شود
+        # Amend
+        print("-> Git: Amending previous tunnel commit...")
         code, out, err = run_command(f'git commit --amend -m "{TUNNEL_COMMIT_MESSAGE}"')
+        
+        print(f"-> Git: Pushing amended commit to origin/{current_branch}...")
+        code, out, err = run_command(f"git push --force-with-lease origin {current_branch}")
         if code != 0:
-            print("Git amend failed:")
-            print(out or err)
+            print("Git push failed:", out or err)
             return False
-
-        # Force-with-lease is safer than --force
-        print("-> Git: Pushing amended commit (force-with-lease) to origin/main...")
-        code, out, err = run_command("git push --force-with-lease origin main")
-        if code != 0:
-            print("Git push failed:")
-            print(out or err)
-            return False
-
-        print("GitHub updated successfully (amended single tunnel commit).")
         return True
 
     else:
-        # Create a new dedicated tunnel commit (only happens when last commit was not tunnel-related)
-        print("-> Git: Creating a new dedicated tunnel commit (first time or after manual commits)...")
+        # Create new
+        print("-> Git: Creating a new dedicated tunnel commit...")
         code, out, err = run_command(f'git commit -m "{TUNNEL_COMMIT_MESSAGE}"')
-        commit_output = "\n".join(part for part in (out, err) if part)
-
+        
+        print(f"-> Git: Pushing to origin/{current_branch}...")
+        code, out, err = run_command(f"git push origin {current_branch}")
         if code != 0:
-            # In case git says nothing to commit (race or identical)
-            if "nothing to commit" in commit_output.lower():
-                print("-> Git: No change detected (nothing to commit). Skipping push.")
-                return True
-
-            print("Git commit failed:")
-            print(commit_output)
+            print("Git push failed:", out or err)
             return False
-
-        print("-> Git: Commit successful.")
-
-        # Normal push (no force needed here)
-        print("-> Git: Pushing to origin/main...")
-        code, out, err = run_command("git push origin main")
-        if code != 0:
-            print("Git push failed:")
-            print(out or err)
-            return False
-
-        print("GitHub updated successfully (created tunnel commit).")
         return True
-=======
-    # 5. Push to clean-history
-    print(f"-> Git: Pushing to origin/clean-history...")
-    code, out, err = run_command("git push origin clean-history")
-    if code != 0:
-        print("Git push failed:")
-        print(out or err)
-        return False
-
-    print("GitHub updated successfully on clean-history.")
-    return True
->>>>>>> Stashed changes
 
 
 def extract_url(text):
