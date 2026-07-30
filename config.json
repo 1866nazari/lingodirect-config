@@ -1,22 +1,3 @@
 {
-  "server": {
-    "baseUrl": "https://92df61a7202339.lhr.life",
-    "status": "online"
-  },
-  "app_management": {
-    "latest_version": {
-      "versionCode": 1,
-      "versionName": "1.0.0",
-      "apkUrl": "",
-      "isCritical": false
-    },
-    "access_control": {
-      "max_users": 10,
-      "enforce_limit": true,
-      "blocked_ids": [],
-      "registered_devices": [
-        "registered-test-device"
-      ]
-    }
-  }
+  "base_url": "https://bd8d81abe9bd4c.lhr.life"
 }
