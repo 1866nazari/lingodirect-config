@@ -50,38 +50,16 @@ def load_current_url():
 
     try:
         data = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
-        server = data.get("server") or {}
-        url = server.get("baseUrl")
-        if url:
-            return url
-
-        # Backward compatibility with old config format
         return data.get("base_url")
     except (OSError, json.JSONDecodeError):
         return None
 
+
 def save_url(new_url):
     """Writes the new URL to the local config file."""
-    try:
-        if CONFIG_PATH.exists():
-            data = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
-            if not isinstance(data, dict):
-                data = {}
-        else:
-            data = {}
-    except (OSError, json.JSONDecodeError):
-        data = {}
-
-    server = data.get("server")
-    if not isinstance(server, dict):
-        server = {}
-
-    data["server"] = server
-    server["baseUrl"] = new_url
-    server["status"] = "online"
-
+    data = {"base_url": new_url}
     CONFIG_PATH.write_text(
-        json.dumps(data, ensure_ascii=False, indent=2) + "\n",
+        json.dumps(data, ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
 
@@ -92,17 +70,12 @@ def get_public_url():
         response = requests.get(GITHUB_PAGES_URL, timeout=10)
         if response.status_code == 200:
             data = response.json()
-            server = data.get("server") or {}
-            url = server.get("baseUrl")
-            if url:
-                return url
-
-            # Backward compatibility with old config format
             return data.get("base_url")
     except (requests.RequestException, ValueError):
         pass
 
     return None
+
 
 def commit_and_push(new_url):
     """Updates config.json, keeps tunnel URL in a single amendable commit, and pushes safely on current branch."""
@@ -173,9 +146,9 @@ def commit_and_push(new_url):
 
 
 def extract_url(text):
-    """Extracts the public URL from SSH output."""
+    """Extracts the public tunnel URL from SSH output."""
     urls = re.findall(
-        r"https://[a-zA-Z0-9.-]+(?:\.lhr\.life|\.localhost\.run)",
+        r"https://[a-zA-Z0-9.-]+\.(?:lhr\.life|localhost\.run)\b",
         text,
     )
     for url in urls:
