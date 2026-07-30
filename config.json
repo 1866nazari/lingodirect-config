@@ -1,7 +1,7 @@
 {
   "server": {
-    "baseUrl": "",
-    "status": "offline"
+    "baseUrl": "https://a83d8973560e11.lhr.life",
+    "status": "online"
   },
   "app_management": {
     "latest_version": {
