@@ -1,3 +1,19 @@
 {
-  "base_url": "https://7db44554b30b81.lhr.life"
+  "server": {
+    "baseUrl": "",
+    "status": "offline"
+  },
+  "app_management": {
+    "latest_version": {
+      "versionCode": 1,
+      "versionName": "1.0.0",
+      "apkUrl": "",
+      "isCritical": false
+    },
+    "access_control": {
+      "max_users": 10,
+      "enforce_limit": true,
+      "blocked_ids": []
+    }
+  }
 }
