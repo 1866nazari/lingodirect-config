@@ -14,7 +14,9 @@
       "max_users": 10,
       "enforce_limit": true,
       "blocked_ids": [],
-      "registered_devices": []
+      "registered_devices": [
+        "registered-test-device"
+      ]
     }
   }
 }
