@@ -1,6 +1,6 @@
 {
   "server": {
-    "baseUrl": "https://22f645a6ba0448.lhr.life",
+    "baseUrl": "https://141b9edbf0204e.lhr.life",
     "status": "online"
   },
   "app_management": {
@@ -14,8 +14,17 @@
       "max_users": 10,
       "enforce_limit": true,
       "blocked_devices": [],
-      "registered_devices": []
+      "registered_devices": [
+        "28f9686f-7471-434b-80a5-09d88fe2e66f",
+        "df7f76dc-38b0-426b-b2af-a2353115400f",
+        "09f46604-d5c3-488b-b4ba-1a923dac86a3",
+        "manual-tunnel-test",
+        "c79f0ee1-529f-47dc-bd92-fa3be9fcdb85",
+        "b2207a81-de29-40a4-aff9-d9d8d20c1f59",
+        "2f7af647-c64f-469c-952f-e691eabfc3bf",
+        "99bfbfac-bcc8-4cc1-99ce-541faa4bd173"
+      ]
     }
   },
-  "base_url": "https://22f645a6ba0448.lhr.life"
+  "base_url": "https://141b9edbf0204e.lhr.life"
 }
