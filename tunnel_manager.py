@@ -56,12 +56,69 @@ def load_current_url():
 
 
 def save_url(new_url):
-    """Writes the new URL to the local config file."""
-    data = {"base_url": new_url}
-    CONFIG_PATH.write_text(
-        json.dumps(data, ensure_ascii=False, indent=2),
-        encoding="utf-8",
-    )
+    """Writes the new URL to the local config file while preserving existing settings."""
+    # ۱. تعریف ساختار پیش‌فرض در صورتی که فایل هنوز ایجاد نشده یا خراب باشد
+    default_data = {
+        "server": {
+            "baseUrl": new_url,
+            "status": "online"
+        },
+        "app_management": {
+            "latest_version": {
+                "versionCode": 2,
+                "versionName": "1.0.1",
+                "apkUrl": "https://github.com/your-repo/releases/download/v1.0.1/app.apk",
+                "isCritical": False
+            },
+            "access_control": {
+                "max_users": 10,
+                "enforce_limit": True,
+                "blocked_devices": [],
+                "registered_devices": []
+            }
+        },
+        "base_url": new_url
+    }
+
+    data = default_data
+
+    # ۲. تلاش برای خواندن اطلاعات موجود و حفظ ساختار قبلی
+    if CONFIG_PATH.exists():
+        try:
+            existing_content = CONFIG_PATH.read_text(encoding="utf-8")
+            if existing_content.strip():
+                loaded_data = json.loads(existing_content)
+                if isinstance(loaded_data, dict):
+                    data = loaded_data
+                    
+                    # به‌روزرسانی فقط فیلدهای آدرس و وضعیت سرور
+                    data["base_url"] = new_url
+                    
+                    if "server" not in data or not isinstance(data["server"], dict):
+                        data["server"] = {}
+                    data["server"]["baseUrl"] = new_url
+                    data["server"]["status"] = "online"
+                    
+                    # اطمینان از وجود بخش مدیریت اپلیکیشن بدون دست زدن به مقادیر آن
+                    if "app_management" not in data:
+                        data["app_management"] = default_data["app_management"]
+                        
+                else:
+                    print("Warning: config.json format is not a dictionary. Overwriting with default.")
+        except json.JSONDecodeError:
+            print("Warning: config.json is corrupted. Rebuilding with default structure.")
+        except Exception as e:
+            print(f"Warning: Failed to read existing config.json: {e}")
+
+    # ۳. ذخیره‌سازی نهایی فایل با حفظ فرمت زیبا و متون یونیکد (فارسی)
+    try:
+        CONFIG_PATH.write_text(
+            json.dumps(data, ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
+        print(f"-> Local config updated successfully. Preserved existing configurations.")
+    except Exception as e:
+        print(f"Error saving config.json: {e}")
 
 
 def get_public_url():
