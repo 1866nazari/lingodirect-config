@@ -1,5 +1,5 @@
 {
-  "base_url": "https://your-active-lhr-tunnel-link.lhr.life",
+  "base_url": "https://202ba95ac342b6.lhr.life",
   "app_management": {
     "access_control": {
       "enforce_limit": true,
@@ -9,5 +9,9 @@
       ],
       "blocked_devices": []
     }
+  },
+  "server": {
+    "baseUrl": "https://202ba95ac342b6.lhr.life",
+    "status": "online"
   }
 }
