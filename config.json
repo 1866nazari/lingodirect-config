@@ -3,7 +3,7 @@
   "app_management": {
     "access_control": {
       "enforce_limit": true,
-      "max_users": 10,
+      "max_users": 1,
       "registered_devices": [
         "dff92e3e-bdc1-3b96-9dde-0d40765c6e76"
       ],
