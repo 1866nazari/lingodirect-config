@@ -1,6 +1,6 @@
 {
   "server": {
-    "baseUrl": "https://83da4b88dc4a8a.lhr.life",
+    "baseUrl": "https://1e9429c512b99c.lhr.life",
     "status": "online"
   },
   "app_management": {
@@ -23,5 +23,5 @@
     "blocked_devices": [],
     "registered_devices": []
   },
-  "base_url": "https://83da4b88dc4a8a.lhr.life"
+  "base_url": "https://1e9429c512b99c.lhr.life"
 }
