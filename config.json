@@ -1,5 +1,5 @@
 {
-  "base_url": "https://ee39e7e2596cda.lhr.life",
+  "base_url": "https://101ed34a0d2f33.lhr.life",
   "app_management": {
     "access_control": {
       "enforce_limit": true,
@@ -11,7 +11,7 @@
     }
   },
   "server": {
-    "baseUrl": "https://ee39e7e2596cda.lhr.life",
+    "baseUrl": "https://101ed34a0d2f33.lhr.life",
     "status": "online"
   }
 }
