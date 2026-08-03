@@ -1,6 +1,6 @@
 {
   "server": {
-    "baseUrl": "https://0e8966cb5165d6.lhr.life",
+    "baseUrl": "https://141b9edbf0204e.lhr.life",
     "status": "online"
   },
   "app_management": {
@@ -14,8 +14,10 @@
       "max_users": 10,
       "enforce_limit": true,
       "blocked_devices": [],
-      "registered_devices": []
+      "registered_devices": [
+        "99bfbfac-bcc8-4cc1-99ce-541faa4bd173"
+      ]
     }
   },
-  "base_url": "https://0e8966cb5165d6.lhr.life"
+  "base_url": "https://141b9edbf0204e.lhr.life"
 }
