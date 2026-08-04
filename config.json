@@ -5,7 +5,6 @@
       "enforce_limit": true,
       "max_users": 10,
       "registered_devices": [
-        "dff92e3e-bdc1-3b96-9dde-0d40765c6e76",
         "611bb917-339d-3d9a-9807-503872f61183"
       ],
       "blocked_devices": []
