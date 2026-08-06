@@ -1,9 +1,9 @@
 {
-  "latest_version_name": "1.0.8",
-  "latest_version_code": 8,
+  "latest_version_name": "1.0.9",
+  "latest_version_code": 9,
   "force_update": false,
-  "apk_url": "https://github.com/1866universe/lingodirect-config/releases/download/v1.0.8/LingoDirect-1.0.8.apk",
-  "apk_sha256": "bdd21c64941b07bbab58f51f3e013296d88d95a3ac99660d89c346ee3a3d4aa1",
+  "apk_url": "https://github.com/1866universe/lingodirect-config/releases/download/v1.0.9/LingoDirect-1.0.9.apk",
+  "apk_sha256": "ea06a7c453a4b96e4613ddb59cd0ca5297412f839a63abec3bb61a6f0fdac890",
 
   "title_fa": "نسخه جدید LingoDirect آماده است",
   "title_en": "A new version of LingoDirect is available",
