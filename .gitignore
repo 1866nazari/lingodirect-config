@@ -2,3 +2,4 @@ check_path.py
 PRIVATE_README.md
 __pycache__/
 *.pyc
+RELEASE_GUIDE.md
