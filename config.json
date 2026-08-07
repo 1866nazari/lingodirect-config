@@ -1,17 +1,23 @@
 {
-  "base_url": "https://2d98bb91c640b9.lhr.life",
+  "base_url": "https://c579c593d2d224.lhr.life",
   "app_management": {
     "access_control": {
       "enforce_limit": true,
       "max_users": 10,
       "registered_devices": [
-        "78876d12-9ffd-38e8-b209-d82b8110fb73"
+        "78876d12-9ffd-38e8-b209-d82b8110fb73",
+        {
+          "device_id": "611bb917-339d-3d9a-9807-503872f61183",
+          "admin_label": "user-001",
+          "device_model": "SM-A107F",
+          "status": "allowed"
+        }
       ],
       "blocked_devices": []
     }
   },
   "server": {
-    "baseUrl": "https://2d98bb91c640b9.lhr.life",
+    "baseUrl": "https://c579c593d2d224.lhr.life",
     "status": "online"
   }
 }
