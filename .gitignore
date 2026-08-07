@@ -3,3 +3,8 @@ PRIVATE_README.md
 __pycache__/
 *.pyc
 RELEASE_GUIDE.md
+fcm_registry.json
+*.keystore
+*.jks
+*.p12
+local.properties
