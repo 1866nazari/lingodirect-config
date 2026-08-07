@@ -1,17 +1,23 @@
 {
-  "base_url": "https://e5082d570cedb6.lhr.life",
+  "base_url": "https://7da0efc88456aa.lhr.life",
   "app_management": {
     "access_control": {
       "enforce_limit": true,
       "max_users": 10,
       "registered_devices": [
-        "78876d12-9ffd-38e8-b209-d82b8110fb73"
+        "78876d12-9ffd-38e8-b209-d82b8110fb73",
+        {
+          "device_id": "611bb917-339d-3d9a-9807-503872f61183",
+          "admin_label": "user-001",
+          "device_model": "UNKNOWN",
+          "status": "allowed"
+        }
       ],
       "blocked_devices": []
     }
   },
   "server": {
-    "baseUrl": "https://e5082d570cedb6.lhr.life",
+    "baseUrl": "https://7da0efc88456aa.lhr.life",
     "status": "online"
   }
 }
